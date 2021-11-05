@@ -1,8 +1,8 @@
 type Moods @model {
   id: ID!
   date: AWSDate!
-  deprime: Int!
-  fatigue: Int!
-  angoisse: Int!
+  deprime: String!
+  fatigue: String!
+  angoisse: String!
   comment: String
 }
