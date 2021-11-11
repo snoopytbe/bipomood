@@ -1,15 +1,23 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-bipomood-dev-133632-authRole",
-      "UnauthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-133632-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-133632-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-bipomood-dev-133632-deployment",
-      "UnauthRoleName": "amplify-bipomood-dev-133632-unauthRole",
-      "StackName": "amplify-bipomood-dev-133632",
-      "StackId": "arn:aws:cloudformation:eu-west-1:534072926849:stack/amplify-bipomood-dev-133632/4fdf61e0-332c-11ec-85f6-02d3098ce6b9",
-      "AmplifyAppId": "dnthmagdgdgii"
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-bipomood-dev-175812-authRole",
+            "UnauthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-bipomood-dev-175812-deployment",
+            "UnauthRoleName": "amplify-bipomood-dev-175812-unauthRole",
+            "StackName": "amplify-bipomood-dev-175812",
+            "StackId": "arn:aws:cloudformation:eu-west-1:534072926849:stack/amplify-bipomood-dev-175812/e616c880-3feb-11ec-a7a2-02b29ff777f5",
+            "AmplifyAppId": "dr0806nxjrlkc"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "dr0806nxjrlkc",
+                    "type": "manual"
+                }
+            }
+        }
     }
-  }
 }

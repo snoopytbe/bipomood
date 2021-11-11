@@ -9,25 +9,27 @@ export const getMoods = /* GraphQL */ `
       deprime
       fatigue
       angoisse
+      enervement
       comment
       createdAt
       updatedAt
     }
   }
 `;
-export const listMoods = /* GraphQL */ `
-  query ListMoods(
+export const listMoodss = /* GraphQL */ `
+  query ListMoodss(
     $filter: ModelMoodsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listMoods(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listMoodss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         date
         deprime
         fatigue
         angoisse
+        enervement
         comment
         createdAt
         updatedAt

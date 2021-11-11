@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
-import { Rating } from "@mui/material";
+import { Rating, Stack, Typography } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
+import { MobileDatePicker } from "@mui/lab";
 import awsconfig from "./aws-exports";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { listMoods } from "./graphql/queries";
+import { listMoodss } from "./graphql/queries";
 import { createMoods, updateMoods } from "./graphql/mutations";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
@@ -22,7 +21,9 @@ moment.locale("fr");
 
 const App = () => {
   const [moods, setMoods] = useState([]);
-  const [dateCourante, setDateCourante] = useState("2021-11-01");
+  const [dateCourante, setDateCourante] = useState(
+    moment().format("YYYY-MM-DD")
+  );
 
   async function saveData(event) {
     try {
@@ -33,6 +34,7 @@ const App = () => {
               date: event.date,
               deprime: event.deprime,
               angoisse: event.angoisse,
+              enervement: event.enervement,
               fatigue: event.fatigue,
               comment: event.comment || "",
               id: event.id,
@@ -46,6 +48,7 @@ const App = () => {
               date: event.date,
               deprime: event.deprime,
               angoisse: event.angoisse,
+              enervement: event.enervement,
               fatigue: event.fatigue,
               comment: event.comment || "",
             },
@@ -60,6 +63,7 @@ const App = () => {
   const { control, handleSubmit, reset } = useForm();
 
   useEffect(() => {
+    console.log(dateCourante);
     async function fetchMoods() {
       try {
         let filter = {
@@ -68,28 +72,33 @@ const App = () => {
           },
         };
         const moodData = await API.graphql({
-          query: listMoods,
+          query: listMoodss,
           variables: { filter: filter },
         });
-        setMoods(moodData.data.listMoods.items[0]);
+        setMoods(moodData.data.listMoodss.items[0]);
       } catch (err) {
         console.log("error fetching moods");
       }
     }
-
-    setMoods(fetchMoods(dateCourante));
+    const newMoods = fetchMoods(dateCourante);
+    setMoods(newMoods);
   }, [dateCourante]);
 
   useEffect(() => {
-    setDateCourante("2021-11-01");
+    console.log(dateCourante);
+    setDateCourante(moment().format("YYYY-MM-DD"));
   }, []);
 
   useEffect(() => {
-    if (moods !== undefined && "date" in moods) {
-      reset(moods);
-    } else {
-      reset({ date: dateCourante, deprime: "3", angoisse: "3", comment: "" });
-    }
+    console.log("useEffectRest" + dateCourante);
+    reset({
+      date: dateCourante,
+      deprime: moods?.deprime | "",
+      angoisse: moods?.angoisse | "0",
+      fatigue: moods?.fatigue | "0",
+      enervement: moods?.enervement | "0",
+      comment: moods?.comment | "",
+    });
   }, [reset, moods, dateCourante]);
 
   const onSubmit = (update) => {
@@ -97,88 +106,161 @@ const App = () => {
   };
 
   const onChangeDateHandler = (date) => {
+    console.log(dateCourante);
     setDateCourante(moment(date).format("YYYY-MM-DD"));
   };
 
   return (
-    <div style={{ flexGrow: 1 }}>
-      <Typography variant="h5">Humeurs</Typography>
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField disabled sx={visuallyHidden} id="id" />
-        <LocalizationProvider
-          dateAdapter={DateAdapter}
-          utils={MomentUtils}
-          locale="fr"
+        <Stack
+          spacing={0}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
         >
+          <Typography
+            variant="h5"
+            sx={{ paddingTop: "20px", paddingBottom: "20px" }}
+          >
+            Humeurs
+          </Typography>
+
+          <TextField disabled sx={visuallyHidden} id="id" />
+
+          <LocalizationProvider
+            dateAdapter={DateAdapter}
+            utils={MomentUtils}
+            locale="fr"
+          >
+            <Controller
+              name="date"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <MobileDatePicker
+                  onChange={(date) => {
+                    onChange();
+                    onChangeDateHandler(date);
+                  }}
+                  disableCloseOnSelect={false}
+                  value={value}
+                  renderInput={(params) => (
+                    <TextField sx={{ paddingBottom: "10px" }} {...params} />
+                  )}
+                />
+              )}
+            />
+          </LocalizationProvider>
+
+          <Typography sx={{ fontSize: 16 }}>Déprime :</Typography>
+
           <Controller
-            name="date"
+            name="deprime"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <DatePicker
-                onChange={(date) => {
-                  onChange();
-                  onChangeDateHandler(date);
-                }}
-                value={value || 0}
-                renderInput={(params) => <TextField {...params} />}
+              <Rating
+                value={parseInt(value) || 0}
+                defaultValue={1}
+                onChange={onChange}
+                sx={{ paddingBottom: "10px" }}
               />
             )}
           />
-        </LocalizationProvider>
-        <Typography sx={{ fontSize: 16 }}>Déprime :</Typography>
-        <Controller
-          name="deprime"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <Rating
-              value={parseInt(value) || 0}
-              defaultValue={1}
-              onChange={onChange}
-            />
-          )}
-        />
-        <Typography sx={{ fontSize: 16 }}>Angoisse :</Typography>
-        <Controller
-          name="angoisse"
-          control={control}
-          render={({ field: { onChange, value, name } }) => (
-            <Rating
-              value={parseInt(value) || 0}
-              defaultValue={1}
-              onChange={onChange}
-            />
-          )}
-        />
-        <Typography sx={{ fontSize: 16 }}>Fatigue :</Typography>
-        <Controller
-          name="fatigue"
-          control={control}
-          render={({ field: { onChange, value, name } }) => (
-            <Rating
-              value={parseInt(value) || 0}
-              defaultValue={1}
-              onChange={onChange}
-            />
-          )}
-        />
-        <Typography variant="h6" />
-        <Controller
-          name="comment"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              value={value || ""}
-              label="Commentaire"
-              multiline
-              rows={4}
-              onChange={onChange}
-            />
-          )}
-        />
-        <Typography variant="h1" />
-        <Button variant="contained" color="primary" type="submit">
-          Enregistrer
-        </Button>
+
+          <Typography sx={{ fontSize: 16 }}>Fatigue :</Typography>
+
+          <Controller
+            name="fatigue"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Rating
+                value={parseInt(value) || 0}
+                defaultValue={1}
+                onChange={onChange}
+                sx={{ paddingBottom: "10px" }}
+              />
+            )}
+          />
+
+          <Typography sx={{ fontSize: 16 }}>Angoisse :</Typography>
+
+          <Controller
+            name="angoisse"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Rating
+                value={parseInt(value) || 0}
+                defaultValue={1}
+                onChange={onChange}
+                sx={{ paddingBottom: "10px" }}
+              />
+            )}
+          />
+
+          <Typography sx={{ fontSize: 16 }}>Enervement :</Typography>
+
+          <Controller
+            name="enervement"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Rating
+                value={parseInt(value) || 0}
+                defaultValue={1}
+                onChange={onChange}
+                sx={{ paddingBottom: "10px" }}
+              />
+            )}
+          />
+
+          <Typography variant="h6" />
+
+          <Controller
+            name="comment"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                value={value || ""}
+                sx={{ width: 260, paddingBottom: "20px" }}
+                label="Commentaire"
+                multiline
+                rows={4}
+                onChange={onChange}
+              />
+            )}
+          />
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                setDateCourante(
+                  moment(dateCourante).add(-1, "days").format("YYYY-MM-DD")
+                );
+              }}
+            >
+              &lt;&lt;
+            </Button>
+            <Button variant="contained" color="primary" type="submit">
+              Enregistrer
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                setDateCourante(
+                  moment(dateCourante).add(1, "days").format("YYYY-MM-DD")
+                );
+              }}
+            >
+              &gt;&gt;
+            </Button>
+          </Stack>
+        </Stack>
       </form>
     </div>
   );

@@ -1,6 +1,6 @@
 projects:
   bipomood:
-    schemaPath: amplify/backend/api/bipomood/build/schema.graphql
+    schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
     excludes:
@@ -10,9 +10,6 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
-        region: eu-west-1
-        apiId: null
-        maxDepth: 2
 extensions:
   amplify:
     version: 3

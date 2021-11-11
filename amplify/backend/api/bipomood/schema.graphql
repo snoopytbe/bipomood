@@ -4,5 +4,6 @@ type Moods @model {
   deprime: String!
   fatigue: String!
   angoisse: String!
+  enervement: String!
   comment: String
 }

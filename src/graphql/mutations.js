@@ -12,6 +12,7 @@ export const createMoods = /* GraphQL */ `
       deprime
       fatigue
       angoisse
+      enervement
       comment
       createdAt
       updatedAt
@@ -29,6 +30,7 @@ export const updateMoods = /* GraphQL */ `
       deprime
       fatigue
       angoisse
+      enervement
       comment
       createdAt
       updatedAt
@@ -46,6 +48,7 @@ export const deleteMoods = /* GraphQL */ `
       deprime
       fatigue
       angoisse
+      enervement
       comment
       createdAt
       updatedAt
