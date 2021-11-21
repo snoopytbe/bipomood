@@ -13,6 +13,7 @@ export const getMoods = /* GraphQL */ `
       comment
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -33,6 +34,7 @@ export const listMoodss = /* GraphQL */ `
         comment
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

@@ -1,23 +1,36 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-bipomood-dev-175812-authRole",
-            "UnauthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-authRole",
-            "Region": "eu-west-1",
-            "DeploymentBucketName": "amplify-bipomood-dev-175812-deployment",
-            "UnauthRoleName": "amplify-bipomood-dev-175812-unauthRole",
-            "StackName": "amplify-bipomood-dev-175812",
-            "StackId": "arn:aws:cloudformation:eu-west-1:534072926849:stack/amplify-bipomood-dev-175812/e616c880-3feb-11ec-a7a2-02b29ff777f5",
-            "AmplifyAppId": "dr0806nxjrlkc"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "dr0806nxjrlkc",
-                    "type": "manual"
-                }
-            }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bipomood-dev-175812-authRole",
+      "UnauthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::534072926849:role/amplify-bipomood-dev-175812-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-bipomood-dev-175812-deployment",
+      "UnauthRoleName": "amplify-bipomood-dev-175812-unauthRole",
+      "StackName": "amplify-bipomood-dev-175812",
+      "StackId": "arn:aws:cloudformation:eu-west-1:534072926849:stack/amplify-bipomood-dev-175812/e616c880-3feb-11ec-a7a2-02b29ff777f5",
+      "AmplifyAppId": "dr0806nxjrlkc",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-bipomood-dev-175812-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dr0806nxjrlkc",
+          "type": "manual"
         }
+      },
+      "function": {
+        "bipomood093eb92cCustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "Confirmez votre adresse mail",
+          "EMAILMESSAGE": "",
+          "deploymentBucketName": "amplify-bipomood-dev-175812-deployment",
+          "s3Key": "amplify-builds/bipomood093eb92cCustomMessage-5752516a624f4339486b-build.zip"
+        }
+      },
+      "auth": {
+        "bipomood093eb92c": {}
+      }
     }
+  }
 }

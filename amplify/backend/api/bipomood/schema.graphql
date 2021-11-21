@@ -1,4 +1,13 @@
-type Moods @model {
+type Moods
+  @model
+  @auth(
+    rules: [
+      # Defaults to use the "owner" field.
+      { allow: owner }
+      # Admin users can access any operation.
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
   id: ID!
   date: AWSDate!
   deprime: String!

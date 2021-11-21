@@ -16,6 +16,7 @@ export const createMoods = /* GraphQL */ `
       comment
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -34,6 +35,7 @@ export const updateMoods = /* GraphQL */ `
       comment
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -52,6 +54,7 @@ export const deleteMoods = /* GraphQL */ `
       comment
       createdAt
       updatedAt
+      owner
     }
   }
 `;
